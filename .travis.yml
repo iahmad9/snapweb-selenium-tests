@@ -11,6 +11,8 @@ cache:
 before_install:
 
 install:
+  - sudo apt remove -y chromium-browser
+  - sudo apt-get install -y  google-chrome-stable
   - ls -alt $HOME/.ssh
 
 before_script:
