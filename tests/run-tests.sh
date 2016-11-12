@@ -19,13 +19,13 @@ if [ -z "$4" ]
   then
     echo 'Setup the environment before running snapweb selenium test'
     echo '----------------------------------------------------------'
-    #wget -nc http://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip
-    #unzip -o chromedriver_linux64.zip
+    wget -nc http://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip
+    unzip -o chromedriver_linux64.zip
 
-    #wget -nc https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz
-    #tar -xvzf geckodriver-v0.11.1-linux64.tar.gz
+    wget -nc https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz
+    tar -xvzf geckodriver-v0.11.1-linux64.tar.gz
 
-    #export PATH=$PATH:$PWD
+    export PATH=$PATH:$PWD
 
     echo 'Download Standalone Selenium Server...'
     wget -nc https://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar
