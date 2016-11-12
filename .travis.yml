@@ -3,14 +3,12 @@ dist: xenial
 language: go
 go:
   - 1.5
-services: docker
 
 cache:
   directories:
     - node_modules
 
 before_install:
-  - docker run carlad/sinatra -v /dev/shm:/dev/sh
   - sudo apt-get install -y chromium-browser  # Travis version needs updating
 
 install:
