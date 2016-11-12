@@ -16,7 +16,7 @@ var installedSnapsPage = Object.create(page, {
      * define or overwrite page methods
      */
     open: { value: function() {
-	browser.deleteCookie();
+//	browser.deleteCookie();
 	acPage.open();
 	var valid_token = "";
         browser.call(function () { 

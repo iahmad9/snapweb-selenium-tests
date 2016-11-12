@@ -16,7 +16,7 @@ var accessControlPage = Object.create(page, {
      * define or overwrite page methods
      */
     open: { value: function () {
-	browser.deleteCookie();
+//	browser.deleteCookie();
         page.open.call(this, 'access-control');
     } },
 
