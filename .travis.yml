@@ -1,0 +1,26 @@
+sudo: required
+dist: trusty
+language: go
+go:
+  - 1.5
+services: docker
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - sudo apt-get install -y chromium-browser  # Travis version needs updating
+
+install:
+  - ls -alt $HOME/.ssh
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
+script:
+  - cd tests
+  - ./run-tests.sh snapweb localhost 8022
+
