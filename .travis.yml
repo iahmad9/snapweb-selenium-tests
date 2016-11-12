@@ -12,7 +12,7 @@ before_install:
 
 install:
   - sudo apt remove -y chromium-browser
-  - sudo apt-get install -y  google-chrome-stable
+  - sudo apt-get install -y  google-chrome-stable qemu-kvm xdotool
   - ls -alt $HOME/.ssh
 
 before_script:
@@ -21,7 +21,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - ./setup-kvm.sh ubuntu-core-16-amd64-rc.img.xz
+  - ./setup-kvm.sh ubuntu-core-16-amd64.img.xz
   - cd tests
-  - ./run-tests.sh snapweb.ci 104.199.9.196 22
+  - ./run-tests.sh snapweb localhost 8022
 
