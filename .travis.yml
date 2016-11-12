@@ -10,7 +10,7 @@ cache:
     - node_modules
 
 before_install:
-  - docker run ... -v /dev/shm:/dev/sh
+  - docker run carlad/sinatra -v /dev/shm:/dev/sh
   - sudo apt-get install -y chromium-browser  # Travis version needs updating
 
 install:
