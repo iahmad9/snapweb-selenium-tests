@@ -9,7 +9,6 @@ cache:
     - node_modules
 
 before_install:
-  - sudo apt-get install -y chromium-browser  # Travis version needs updating
 
 install:
   - ls -alt $HOME/.ssh
