@@ -68,7 +68,7 @@ exports.config = {
     //
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
-    baseUrl: 'http://www.google.com',
+    baseUrl: 'https://localhost:4201',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 20000,
@@ -144,8 +144,8 @@ exports.config = {
     // Gets executed before test execution begins. At this point you can access all global
     // variables, such as `browser`. It is the perfect place to define custom commands.
      before: function (capabilities, specs) {
-	//var sshSnapUtil = require('./utils/ssh-snap-util');
-	//snaputil = new sshSnapUtil(process.env.HOST, process.env.USER, process.env.PORT, process.env.SSH_AUTH_SOCK);
+	var sshSnapUtil = require('./utils/ssh-snap-util');
+	snaputil = new sshSnapUtil(process.env.HOST, process.env.USER, process.env.PORT, process.env.SSH_AUTH_SOCK);
      },
     //
     // Hook that gets executed before the suite starts
