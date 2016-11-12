@@ -10,6 +10,8 @@ cache:
     - node_modules
 
 before_install:
+  - docker exec $id sudo umount /dev/shm
+  - docker exec $id sudo mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=512M tmpfs /dev/shm
   - sudo apt-get install -y chromium-browser  # Travis version needs updating
 
 install:
