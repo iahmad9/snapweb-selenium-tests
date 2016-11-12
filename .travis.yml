@@ -21,6 +21,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
+  - ./setup-kvm.sh ubuntu-core-16-amd64-rc.img.xz
   - cd tests
   - ./run-tests.sh snapweb.ci 104.199.9.196 22
 

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 echo "Setup the ubuntu-core on KVM"
+wget -nc http://releases.ubuntu.com/ubuntu-core/16/ubuntu-core-16-amd64.img.xz
+
 rm -rf /tmp/*
 xzfile=$(basename "$1")
 imgfile="${xzfile%.*}"
