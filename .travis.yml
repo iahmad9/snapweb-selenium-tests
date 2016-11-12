@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: trusty
 language: go
 go:
   - 1.5
@@ -9,10 +9,14 @@ cache:
     - node_modules
 
 before_install:
-
-install:
+  - openssl aes-256-cbc -K $encrypted_730d54c061db_key -iv $encrypted_730d54c061db_iv -in id_rsa.enc -out id_rsa -d
   - sudo apt remove -y chromium-browser
   - sudo apt-get install -y  google-chrome-stable
+
+install:
+  - mkdir -p $HOME/.ssh
+  - mv id_rsa $HOME/.ssh
+  - chmod 600 $HOME/.ssh/id_rsa
   - ls -alt $HOME/.ssh
 
 before_script:
@@ -21,6 +25,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
+  - cat ssh-config-tweak >> ~/.ssh/config
   - cd tests
   - ./run-tests.sh snapweb.ci 104.199.9.196 22
 
