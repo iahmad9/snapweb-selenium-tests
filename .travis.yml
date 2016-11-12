@@ -21,5 +21,5 @@ before_script:
 
 script:
   - cd tests
-  - ./run-tests.sh snapweb localhost 8022
+  - ./run-tests.sh snapweb.ci 104.199.9.196 22
 
