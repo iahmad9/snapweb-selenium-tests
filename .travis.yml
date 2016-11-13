@@ -12,16 +12,18 @@ before_install:
 
 install:
   - sudo apt remove -y chromium-browser
-  - sudo apt-get install -y  google-chrome-stable qemu-kvm xdotool
+  - sudo apt-get install -y  google-chrome-stable snapd
   - ls -alt $HOME/.ssh
 
 before_script:
+  - ifconfig
+  - snap list
+  - snap install snapweb
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
 script:
-  - ./setup-kvm.sh ubuntu-core-16-amd64.img.xz
   - cd tests
   - ./run-tests.sh snapweb localhost 8022
 
