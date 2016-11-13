@@ -63,11 +63,11 @@ sshSnapUtil.prototype.getToken = function() {
 }
 
 sshSnapUtil.prototype.installSnap = function(name) {
-	return this._promisifyExec('snap install '+name);
+	return this._promisifyExec('sudo snap install '+name);
 }
 
 sshSnapUtil.prototype.removeSnap = function(name) {
-	return this._promisifyExec('snap remove '+name);
+	return this._promisifyExec('sudo snap remove '+name);
 }
 
 sshSnapUtil.prototype.snapVersion = function() {

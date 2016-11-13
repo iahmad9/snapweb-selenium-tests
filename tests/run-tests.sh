@@ -51,6 +51,11 @@ if [ ! -d "$modules_dir" ]; then
   modules_dir="../node_modules"
 fi
 
+echo 'script--|'$host
+echo 'script--|'$port
+echo 'script--|'$user
+echo 'script--|'$SSH_AUTH_SOCK
+
 USER=$user HOST=$host PORT=$port $modules_dir/.bin/wdio -b https://$2:4201
 
 trap "kill -9  $pid" 0
