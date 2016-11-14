@@ -1,0 +1,120 @@
+#!/bin/sh
+
+set -eu
+
+if which goctest >/dev/null; then
+    goctest="goctest"
+else
+    goctest="go test"
+fi
+
+STATIC=""
+UNIT_GO=""
+UNIT_JS=""
+
+case "${1:-all}" in
+    all)
+        STATIC="yes"
+        UNIT_GO="yes"
+        UNIT_JS="yes"
+        ;;
+    --static)
+        STATIC="yes"
+        ;;
+    --unit)
+        UNIT_GO="yes"
+        UNIT_JS="yes"
+        ;;
+    --unit-go)
+        UNIT_GO="yes"
+        ;;
+    --unit-js)
+        UNIT_JS="yes"
+        ;;
+    *)
+        echo "Wrong flag ${1}. To run a single suite use --static, --unit, --unit-go or --unit-js."
+        exit 1
+esac
+
+# Append the coverage profile of a package to the project coverage.
+append_go_coverage() {
+    local profile="$1"
+    if [ -f $profile ]; then
+        cat $profile | grep -v "mode: set" >> .coverage-go/coverage.out
+        rm $profile
+    fi
+}
+
+if [ ! -z "$STATIC" ] || [ ! -z "$UNIT_GO" ]; then
+    sh ./get-go-deps.sh
+fi
+
+if [ ! -z "$STATIC" ]; then
+    # Run static tests.
+
+    echo Checking formatting
+    fmt=$(gofmt -l .)
+
+    if [ -n "$fmt" ]; then
+        echo "Formatting wrong in following files"
+        echo $fmt
+        exit 1
+    fi
+
+    # go vet
+    echo Running vet
+    go vet ./...
+
+    echo Install golint
+    go get -d github.com/golang/lint/golint
+    (
+        cd $GOPATH/src/github.com/golang/lint
+        # revert to the last commit before go 1.5 support was dropped
+        git checkout c6242afa6ced3be489e1184eb80bc2d85f1f5e7b .
+    )
+    go install github.com/golang/lint/golint
+    export PATH=$PATH:$GOPATH/bin
+
+    echo Running lint
+    lint=$(golint ./...)
+    if [ -n "$lint" ]; then
+        echo "Lint complains:"
+        echo $lint
+        exit 1
+    fi
+
+fi
+
+if [ ! -z "$UNIT_GO" ]; then
+    echo Building
+    go build -v github.com/snapcore/snapweb/...
+
+    # Prepare the coverage output profile.
+    rm -rf .coverage-go
+    mkdir .coverage-go
+    echo "mode: set" > .coverage-go/coverage.out
+
+    # tests
+    echo Running tests from $(pwd)
+    for pkg in $(go list ./... | grep -v integration-tests); do
+        $goctest -v -coverprofile=.coverage-go/profile.out $pkg
+        append_go_coverage .coverage-go/profile.out
+    done
+fi
+
+if [ ! -z "$UNIT_JS" ]; then
+    # www
+    echo Obtaining npm dependencies
+    npm install --loglevel error
+
+    rm -rf .coverage-js
+
+    # js unit tests
+    echo "Running js unit tests (set JS_TESTER to override)"
+    ${JS_TESTER:- ./node_modules/karma/bin/karma start --single-run}
+
+    cat .coverage-js/text-summary.txt
+
+fi
+
+echo "All good, what could possibly go wrong"

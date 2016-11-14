@@ -1,0 +1,16 @@
+<img class="p-card__icon" src="{{ icon }}" width="125" height="125">
+<h3 id="js-snap-title" class="p-card__title js-snap-title">{{ name }}</h3>
+{{#if developer}}
+  <p class="p-card__content">By {{ developer }}</p>
+{{/if}}
+{{#if description}}
+  <p class="p-card__content">{{ description }}</p>
+{{/if}}
+{{#if prettyInstalledSize}}
+  <p class="p-card__content">{{ prettyInstalledSize }}</p>
+{{/if}}
+<footer class="p-card__footer">
+    <div class="u-float--right">
+      {{> installer installerClass="button--positive"}}
+    </div>
+</footer>
