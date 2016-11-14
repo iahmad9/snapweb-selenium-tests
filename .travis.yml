@@ -9,6 +9,7 @@ cache:
 addons:
   ssh_known_hosts: 162.213.35.217
 before_install:
+  - "./build-snap.sh"
   - openssl aes-256-cbc -K $encrypted_b2c18e2f704c_key -iv $encrypted_b2c18e2f704c_iv -in id_rsa_snapweb_no_pswd.enc -out id_rsa_snapweb_no_pswd -d 
   - rm id_rsa_snapweb_no_pswd.enc
   - chmod 600 id_rsa_snapweb_no_pswd
