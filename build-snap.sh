@@ -21,7 +21,7 @@ export NODE_PATH=$HOME/node/lib/node_modules
 
 mkdir -p $GOPATH/src/github.com/snapcore
 cd $GOPATH/src/github.com/snapcore
-git clone -b snapweb-selenium-tests --single-branch https://github.com/snapcore/snapweb.git snapweb-selenium-tests
+git clone -b snapweb-selenium-tests --single-branch https://github.com/snapcore/snapweb.git snapweb
 cd snapweb-selenium-tests
 
 npm install -g --prefix=$(npm config get prefix) gulp
